@@ -1,0 +1,82 @@
+﻿@model WebApplication1.Models.User
+
+
+@{
+    ViewData["Title"] = "Register";
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        text-align: center;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #007bff;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .btn-login {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn-login:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+<h1 class="text-center mt-4 mb-4">Register</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form asp-action="Register" class="needs-validation" novalidate>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Name:</label>
+                <input asp-for="Name" class="form-control" required />
+                <div class="invalid-feedback">Please enter your name.</div>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">Email:</label>
+                <input asp-for="Email" class="form-control" required pattern="[a-z0-9._%+-]+@@[a-z0-9.-]+\.[a-z]{2,}$" />
+                <div class="invalid-feedback">Please enter a valid email address.</div>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label">Password:</label>
+                <input asp-for="Password" class="form-control" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number, one uppercase, and one lowercase letter, and at least 8 or more characters"/>
+                <div class="invalid-feedback">Password must contain at least one number, one uppercase, and one lowercase letter, and at least 8 or more characters.</div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </div>
+        </form>
+        <div class="text-center">
+            <p>Already have an account? <a asp-action="Login">Log in</a></p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

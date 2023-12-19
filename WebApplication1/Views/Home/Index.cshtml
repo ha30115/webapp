@@ -1,0 +1,34 @@
+﻿@model IEnumerable<MvcMovie.Models.Ticket>
+@{
+    ViewData["Title"] = "Synergasia";
+    if (Context.Session.Get("userID") == null)
+    {
+        Context.Response.Redirect("/Users/Login");
+    }
+
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Synergasia Project</title>
+ 
+</head>
+<body>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="LogOut">Log Out</a>
+    
+    <partial name="~/Views/Tickets/Index.cshtml" /> 
+    @* @Url.Action("Index", "Ticket"); *@
+
+    
+
+@*     <div class="ticket-list">
+        <iframe src="~../../../Views/Tickets/Index.cshtml" title="description"></iframe>
+    </div> *@
+
+</body>
+</html>

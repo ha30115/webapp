@@ -1,0 +1,134 @@
+﻿@model IEnumerable<MvcMovie.Models.Ticket>
+
+@{
+    ViewData["Title"] = "Title";
+}
+
+<style>
+    body, html {
+        height: 100%;
+    }
+
+    .ticket-list {
+        max-height: 70vh;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: darkgray transparent;
+        /* Additional styles for a rounded, small, and shadowed scrollbar */
+        scrollbar-width: thin;
+        scrollbar-color: darkgray transparent;
+    }
+
+        .ticket-list::-webkit-scrollbar {
+            width:6px;
+        }
+
+        .ticket-list::-webkit-scrollbar-thumb {
+            background-color: darkgray;
+            border-radius: 4px; /* Adjust as needed for more/less rounding */
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1); /* Adjust shadow as needed */
+        }
+</style>
+
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Task Manager</h5>
+                    <button class="btn btn-primary mb-2" onclick="addTaskForm()">Create New</button>
+                    <div class="task-form" style="display: none;">
+                        <div style="margin-bottom: 5px;" class="form-group">
+                            <form asp-action="Create" asp-controller="Tickets">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="@Model.First().creatorID" value="@Context.Session.GetInt32("userID")" />
+                                <div class="form-group">
+                                    <input asp-for="@Model.First().Title" class="form-control" />
+                                    <span asp-validation-for="@Model.First().Title" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input onclick="addTask()" type="submit" value="Add task" class="btn btn-primary" />
+                                    <button class="btn btn-secondary" onclick="cancelAddTask()">X</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+
+                    <hr>
+            <div class="ticket-list">
+                <!-- List of tickets goes here -->
+                <div class="ticket">
+                    <!-- Ticket content goes here -->
+                    @foreach (var item in Model)
+                    {
+                        <p>@item.Title</p>
+                    }
+                </div>
+            </div>
+
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*Javascript Functions scripts*@
+
+<script>
+    function addTaskForm() {
+        // Show the task form when the "Add Task" button is clicked
+        document.querySelector('.task-form').style.display = 'block';
+    }
+
+    function addTask() {
+        // Add your logic to handle the task addition here
+        // For demonstration, let's just hide the task form
+        document.querySelector('.task-form').style.display = 'none';
+    }
+
+    function cancelAddTask() {
+        // Hide the task form when the "Cancel" button is clicked
+        document.querySelector('.task-form').style.display = 'none';
+    }
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+@* <p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table> *@
